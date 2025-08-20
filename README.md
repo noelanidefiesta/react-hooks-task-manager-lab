@@ -1,3 +1,6 @@
+# Changes I MADE
+I decided to update the file names for clarity, same with adding a TaskItem file the way I did. This was also recommended by my friend, she said it provided a cleaner response.
+
 # Lab: Task Manager
 
 ## Overview

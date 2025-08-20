@@ -1,23 +1,24 @@
-import React, { useContext,useState } from "react";
-import { TaskContext } from "../context/TaskContext";
+import { useContext, useMemo } from "react";
+import { TaskContext } from "../context/TaskContext.jsx";
+import TaskItem from "./TaskItem.jsx";
 
-function TaskList({query}) {
-    const [tasks, setTasks] = useState([]);
-    const filteredTasks = tasks.filter(task =>
-    task.title.toLowerCase().includes(query.toLowerCase())
-  );
+function TaskList({ searchText }) {
+  const { tasks } = useContext(TaskContext);
+
+  const visible = useMemo(() => {
+    const q = (searchText || "").trim().toLowerCase();
+    if (!q) return tasks;
+    return tasks.filter((t) => String(t.title).toLowerCase().includes(q));
+  }, [tasks, searchText]);
+
+  if (!tasks || tasks.length === 0) {
+    return <p>No tasks yet.</p>;
+  }
 
   return (
-    <ul>
-      {filteredTasks.map((task) => (
-        <li key={task.id}>
-          <span style={{ textDecoration: task.completed ? "line-through" : "none" }}>
-            {task.title}
-          </span>
-          <button data-testid={task.id}>
-            {task.completed ? "Undo" : "Complete"}
-          </button>
-        </li>
+    <ul style={{ listStyle: "none", padding: 0, display: "grid", gap: 8 }}>
+      {visible.map((task) => (
+        <TaskItem key={task.id} task={task} />
       ))}
     </ul>
   );

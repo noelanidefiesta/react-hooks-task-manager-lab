@@ -1,10 +1,13 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './components/App.jsx'
-import { TaskProvider } from './context/TaskContext.jsx'
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./components/App.jsx";
+import { TaskProvider } from "./context/TaskContext.jsx";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    {/* Wrap the app so all children can use task context */}
+    <TaskProvider>
       <App />
-  </StrictMode>,
-)
+    </TaskProvider>
+  </React.StrictMode>
+);
